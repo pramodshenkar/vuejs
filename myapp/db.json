@@ -9,10 +9,17 @@
     },
     {
       "id": 2,
-      "name": "Akash",
-      "address": "Akole",
-      "pincode": "111111",
-      "phone": "9139555224"
+      "name": "Sagar",
+      "address": "Sangamner",
+      "pincode": "223344",
+      "phone": "91391 11111"
+    },
+    {
+      "id": 3,
+      "name": "Vishal",
+      "address": "Pune",
+      "pincode": "333333",
+      "phone": "(919) 122-3344"
     }
   ]
 }

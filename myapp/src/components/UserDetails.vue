@@ -19,7 +19,9 @@
         <td>{{ user.pincode }}</td>
         <td>{{ user.phone }}</td>
         <td>
-          <button class="btn btn-warning">Edit</button>
+          <button class="btn btn-warning" @click="editUserData(user.id)">
+            Edit
+          </button>
         </td>
         <td>
           <button class="btn btn-info" @click="deleteUserData(user.id)">
@@ -47,17 +49,23 @@ export default {
   },
   methods: {
     getUserData() {
-      axios.get(`http://localhost:3000/users`).then((response) => {
-        console.log(response);
-        this.users = response.data;
-      });
+      axios
+        .get(`http://localhost:3000/users`)
+        .then((response) => {
+          this.users = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deleteUserData(id) {
-      console.log(`http://localhost:3000/users/` + id);
-      axios.delete(`http://localhost:3000/users/` + id).then((response) => {
-        console.log(response);
+      axios.delete(`http://localhost:3000/users/` + id).catch((error) => {
+        console.log(error);
       });
       this.getUserData();
+    },
+    editUserData(id) {
+      Window.Event.$emit("edituserdata", id);
     },
   },
 };

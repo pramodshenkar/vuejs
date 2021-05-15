@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <form @submit.prevent="onPostUser" class="p-5">
+    <form @submit.prevent="submitUserData" class="p-5">
       <div class="form-group">
         <input
           type="text"
@@ -32,7 +32,7 @@
         <VuePhoneNumberInput v-model="phone" />
       </div>
       <div class="form-group mt-4">
-        <button type="submit" class="btn btn-primary">Add User</button>
+        <button type="submit" class="btn btn-primary">{{ button }}</button>
       </div>
     </form>
   </div>
@@ -52,18 +52,63 @@ export default {
       address: "",
       pincode: "",
       phone: "",
+      button: "Add User",
     };
   },
+  mounted() {
+    Window.Event.$on("edituserdata", (id) => {
+      this.editUserData(id);
+    });
+  },
   methods: {
-    onPostUser() {
-      axios.post(`http://localhost:3000/users`, {
-        id: this.id,
-        name: this.name,
-        address: this.address,
-        pincode: this.pincode,
-        phone: this.phone,
-      });
+    submitUserData() {
+      if (this.button == "Add User") {
+        axios
+          .post(`http://localhost:3000/users`, {
+            id: this.id,
+            name: this.name,
+            address: this.address,
+            pincode: this.pincode,
+            phone: this.phone,
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        axios
+          .put(`http://localhost:3000/users/` + this.id + `/`, {
+            id: this.id,
+            name: this.name,
+            address: this.address,
+            pincode: this.pincode,
+            phone: this.phone,
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        this.button = "Add User";
+      }
+      this.name = "";
+      this.address = "";
+      this.pincode = "";
+      this.phone = "";
+      this.button = "Add User";
       Window.Event.$emit("updateuserdatahandler");
+    },
+    editUserData(id) {
+      axios
+        .get(`http://localhost:3000/users/` + id)
+        .then((response) => {
+          this.id = response.data.id;
+          this.name = response.data.name;
+          this.address = response.data.address;
+          this.pincode = response.data.pincode;
+          this.phone = response.data.phone;
+          this.button = "Update User";
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   components: {
