@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Pramod",
+      "address": "Akole",
+      "pincode": 422601,
+      "phone": 9139555224
+    },
+    {
+      "id": 2,
+      "name": "Akash",
+      "address": "Akole",
+      "pincode": "111111",
+      "phone": "9139555224"
+    }
+  ]
+}
